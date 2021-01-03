@@ -12,7 +12,7 @@ module.exports = (dirname) => {
 		},
 		resolve: {
 			alias: {
-				'@bucky24/react-canvas-map': path.resolve(__dirname, '../src/index.js'),
+				'@bucky24/react-canvas-ui': path.resolve(__dirname, '../src/index.js'),
 			}
 		},
 		module: {
