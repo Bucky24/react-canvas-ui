@@ -1,18 +1,25 @@
 import React from 'react';
 import { CanvasComponent, Rect } from '@bucky24/react-canvas';
-import { PositionContext } from './PositionContext';
+import { PositionContext, convertCoords, convertDims, PositionProps } from './PositionContext';
+
+const propTypes = {
+    ...PositionProps,
+};
 
 class Button extends CanvasComponent {
     render() {
-        const { x, y } = this.props;
+        const { x, y, width, height } = this.props;
 
         return <PositionContext.Consumer>
-            {({ parentX, parentY }) => {
+            {({ parentX, parentY, parentWidth, parentHeight }) => {
+                const [ realWidth, realHeight ] = convertDims(width, height, parentWidth, parentHeight);
+                const [ realX, realY ] = convertCoords(x, y, realWidth, realHeight, parentX, parentY);
+
                 return <Rect
-                    x={x + parentX}
-                    y={y + parentY}
-                    x2={x + parentX + 100}
-                    y2={y + parentY + 100}
+                    x={realX}
+                    y={realY}
+                    x2={realX + realWidth}
+                    y2={realY + realHeight}
                     color="#f00"
                     fill
                 />
@@ -22,3 +29,5 @@ class Button extends CanvasComponent {
 }
 
 export default Button;
+
+Button.propTypes = propTypes;
